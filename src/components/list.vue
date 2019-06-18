@@ -13,12 +13,12 @@
 
                 </tr>
                 <tr v-for="(date, propertyName) in allDates" :key="propertyName">
-                    <td>{{propertyName}}</td>
-                    <td>${{propertyName.open}}</td>
-                    <td>${{propertyName.high}}</td>
-                    <td>${{propertyName.low}}</td>
-                    <td>${{propertyName.close}}</td>
-                    <td>${{propertyName.volume}}</td>
+                    <td>{{ propertyName }}</td>
+                    <td>$ {{date["1. open"]}}</td>
+                    <td>$ {{date["2. high"]}}</td>
+                    <td>$ {{date["3. low"]}}</td>
+                    <td>$ {{date["4. close"]}}</td>
+                    <td>$ {{date["5. volume"]}}</td>
                 </tr>
             </table>
         </div>
@@ -58,7 +58,7 @@ export default {
 .table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #4CAF50;
   color: white;
 }
