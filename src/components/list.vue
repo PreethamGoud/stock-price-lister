@@ -1,6 +1,14 @@
 <template>
     <div>
-        <h1>Microsoft</h1>
+        <Dropdown
+        :options= options
+        v-on:selected="validateSelection"
+        v-on:filter="getDropdownValues"
+        :disabled="false"
+        :maxItem="10"
+        placeholder="Please select a Company">
+        </Dropdown>
+        <h1>{{heading}}</h1>
         <div class="dates">
             <table class="table">
                 <tr>
@@ -26,15 +34,42 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import axios from 'axios';
+import Dropdown from 'vue-simple-search-dropdown';
+Vue.use(Dropdown);
 import {mapGetters, mapActions} from 'vuex';
+import { constants } from 'crypto';
 export default {
     name: "list",
     methods: {
-        ...mapActions(['fetchDates'])
+        ...mapActions(['fetchDates']),
+        getDropdownValues(dropdown) {
+            axios.get("https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords="+dropdown+"&apikey=OGC8RRGRZ5AO5JE7")
+        .then(response => {this.options = response.data.bestMatches.map((s) => {
+            return {
+                id: s["1. symbol"],
+                name: s["2. name"],
+                ...s
+            }
+        })})
+        //.then(() => console.log(this.options));
+        },
+        validateSelection(dropdown) {
+            console.log(dropdown.id);
+            this.heading = dropdown.name;
+            this.fetchDates(dropdown.id);
+        }
     },
     computed: mapGetters(['allDates']),
-    created() {
-        this.fetchDates();
+    components: {
+        Dropdown
+    },
+    data () {
+        return {
+            options: [],
+            heading: "",
+        }
     }
 }
 </script>

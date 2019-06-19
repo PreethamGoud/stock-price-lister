@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const state = {
-     dates: []
+     dates: [],
 };
 
 const getters = {
@@ -9,13 +9,12 @@ const getters = {
 };
 
 const actions = {
-    async fetchDates({ commit }){
+    async fetchDates({ commit }, id){
         const response = await axios.get(
-            'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=OGC8RRGRZ5AO5JE7'
+            'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+id+'&apikey=OGC8RRGRZ5AO5JE7'
         );
-
         commit('setDates',response.data["Time Series (Daily)"]);
-        console.log(response.data["Time Series (Daily)"]);
+        //console.log(response.data["Time Series (Daily)"]);
     }
 };
 

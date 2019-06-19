@@ -1,16 +1,19 @@
 <template>
   <div id="app">
+    <FilterData />
     <list />
   </div>
 </template>
 
 <script>
 import list from './components/list.vue'
+import FilterData from './components/FilterData'
 
 export default {
   name: 'app',
   components: {
-    list
+    list,
+    FilterData
   }
 }
 </script>
