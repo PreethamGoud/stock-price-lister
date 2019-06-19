@@ -1,19 +1,16 @@
 <template>
   <div id="app">
-    <FilterData />
     <list />
   </div>
 </template>
 
 <script>
 import list from './components/list.vue'
-import FilterData from './components/FilterData'
 
 export default {
   name: 'app',
   components: {
     list,
-    FilterData
   }
 }
 </script>
@@ -25,6 +22,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

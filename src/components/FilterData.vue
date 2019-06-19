@@ -1,7 +1,7 @@
 <template>
     <div>
         Filter:
-        <select>
+        <select @change="filterData($event)">
             <option value="100">100</option>
             <option value="50">50</option>
             <option value="20">20</option>
@@ -12,9 +12,11 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 export default {
     name: "FilterData",
-}
+    methods: mapActions(["filterData"])
+};
 </script>
 
 <style>
