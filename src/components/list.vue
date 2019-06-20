@@ -5,7 +5,7 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item>
           <Dropdown
-            :options="options"
+            :options="allOptions"
             v-on:selected="validateSelection"
             v-on:filter="getDropdownValues"
             :disabled="false"
@@ -50,40 +50,30 @@ import Dropdown from "vue-simple-search-dropdown";
 Vue.use(Dropdown);
 import { mapGetters, mapActions } from "vuex";
 import { constants } from "crypto";
+
+
 export default {
   name: "list",
   methods: {
-    ...mapActions(["fetchDates"]),
+    ...mapActions(["fetchDates","fetchOptions"]),
     getDropdownValues(dropdown) {
-      axios
-        .get(
-          "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" +
-            dropdown +
-            "&apikey=OGC8RRGRZ5AO5JE7"
-        )
-        .then(response => {
-          this.options = response.data.bestMatches.map(s => {
-            return {
-              id: s["1. symbol"],
-              name: s["2. name"],
-              ...s
-            };
-          });
-        });
-      //.then(() => console.log(this.options));
+      this.fetchOptions(dropdown);
     },
+
     validateSelection(dropdown) {
       this.heading = dropdown.name;
       this.fetchDates(dropdown.id);
     }
   },
-  computed: mapGetters(["allDates"]),
+
+  computed: mapGetters(["allDates", "allOptions"]),
+  
   components: {
     Dropdown
   },
+
   data() {
     return {
-      options: [],
       heading: ""
     };
   }
