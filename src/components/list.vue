@@ -15,7 +15,12 @@
         </b-nav-item>
       </b-navbar-nav>
     </b-navbar>
-    <h2>{{heading}}</h2>
+    <h2>{{ heading }}</h2>
+
+    <div class="container">
+      <VueApexCharts width="1000" type="candlestick" :options="options" :series="allChartData"></VueApexCharts>
+    </div>
+
     <b-card class="mb-2 sub" style="margin-left:5%;">
       <b-card-body style="padding:0">
         <div class="scroll">
@@ -45,17 +50,15 @@
 
 <script>
 import Vue from "vue";
-import axios from "axios";
 import Dropdown from "vue-simple-search-dropdown";
 Vue.use(Dropdown);
 import { mapGetters, mapActions } from "vuex";
-import { constants } from "crypto";
-
+import VueApexCharts from "vue-apexcharts";
 
 export default {
   name: "list",
   methods: {
-    ...mapActions(["fetchDates","fetchOptions"]),
+    ...mapActions(["fetchDates", "fetchOptions",]),
     getDropdownValues(dropdown) {
       this.fetchOptions(dropdown);
     },
@@ -66,28 +69,44 @@ export default {
     }
   },
 
-  computed: mapGetters(["allDates", "allOptions"]),
-  
+  computed: mapGetters(["allDates", "allOptions","allChartData"]),
+
   components: {
-    Dropdown
+    Dropdown,
+    VueApexCharts
   },
 
   data() {
     return {
-      heading: ""
+      heading: "",
+      options: {
+        chart: {
+          id: "vuechart-example"
+        }
+      },
     };
   }
 };
 </script>
 
 <style>
+.chart {
+  background: #212733;
+  border-radius: 15px;
+  box-shadow: 0px 2px 15px rgba(25, 25, 25, 0.27);
+  margin: 25px 0;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
 #main {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
 #sub {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 .card {
   /* Add shadows to create the "card" effect */
