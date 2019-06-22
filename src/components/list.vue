@@ -17,8 +17,8 @@
     </b-navbar>
     <h2>{{ heading }}</h2>
 
-    <div class="container">
-      <VueApexCharts width="1000" type="candlestick" :options="options" :series="allChartData"></VueApexCharts>
+    <div id="container">
+      <VueApexCharts width="500" type="candlestick" :options="options" :series="allChartData"></VueApexCharts>
     </div>
 
     <b-card class="mb-2 sub" style="margin-left:5%;">
@@ -96,12 +96,13 @@ export default {
   box-shadow: 0px 2px 15px rgba(25, 25, 25, 0.27);
   margin: 25px 0;
 }
-.container {
-  max-width: 800px;
+#container {
   margin: 0 auto;
+  display: inline-block
 }
 #main {
   display: flex;
+  text-align: center;
   height: 100%;
   flex-direction: column;
 }
